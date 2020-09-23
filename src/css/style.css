@@ -1,0 +1,44 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(128, 128, 128, 0.75);
+}
+
+.custom-modal {
+    position: fixed;
+    top: 30vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+.user-card:hover {
+    background-color: #f0fbff;
+}
+
+.edit-form-image {
+    display: block;
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+    border-radius: 4%;
+}
+
+.profile-pic {
+    display: block;
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+    border-radius: 4%;
+}
+
+.img-mini {
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+    border: 1px solid gray;
+}
