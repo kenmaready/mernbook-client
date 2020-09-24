@@ -93,7 +93,6 @@ export class EditPost extends Component {
                         redirectToProfile: true,
                         error: "",
                         loading: false,
-                        redirectToProfile: true,
                     });
                 }
             })
