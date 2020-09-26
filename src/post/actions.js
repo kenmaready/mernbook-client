@@ -6,8 +6,8 @@ export const getPost = (postId, token) => {
     });
 };
 
-export const getPosts = (token) => {
-    return axios.get("posts", {
+export const getPosts = (page, token) => {
+    return axios.get(`posts?page=${page}`, {
         headers: { Authorization: `Bearer ${token}` },
     });
 };

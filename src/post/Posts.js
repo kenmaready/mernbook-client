@@ -10,14 +10,18 @@ const baseUrl = process.env.REACT_APP_API_URL;
 export class Posts extends Component {
     constructor() {
         super();
-        this.state = { posts: [], loading: false, error: "" };
+        this.state = { posts: [], page: 1, loading: false, error: "" };
     }
 
     componentDidMount() {
+        this.loadPosts(this.state.page);
+    }
+
+    loadPosts = (page) => {
         if (isAuthenticated()) {
             this.setState({ loading: true });
             const token = isAuthenticated().token;
-            getPosts(token)
+            getPosts(page, token)
                 .then((response) => {
                     if (response.error) {
                         this.setState({ error: response.error });
@@ -31,7 +35,19 @@ export class Posts extends Component {
                 })
                 .catch((err) => console.log(err));
         }
-    }
+    };
+
+    loadNext = (n) => {
+        const newPage = this.state.page + n;
+        this.setState({ page: newPage });
+        this.loadPosts(newPage);
+    };
+
+    loadPrevious = (n) => {
+        const newPage = this.state.page - n;
+        this.setState({ page: newPage });
+        this.loadPosts(newPage);
+    };
 
     renderPosts = (posts) => (
         <div className="row">
@@ -77,7 +93,7 @@ export class Posts extends Component {
     );
 
     render() {
-        const { posts, loading, redirectToLogin } = this.state;
+        const { posts, loading, page, redirectToLogin } = this.state;
 
         return (
             <div className="container">
@@ -90,11 +106,33 @@ export class Posts extends Component {
                     </div>
                 ) : (
                     <>
-                        <h3 className="text-primary">Posts:</h3>
+                        <h3 className="text-primary">
+                            {!posts.length ? "No more posts" : "Recent posts:"}
+                        </h3>
                         <div className="container">
                             {this.renderPosts(posts)}
                         </div>
                     </>
+                )}
+                {page > 1 ? (
+                    <button
+                        className="btn btn-raised btn-primary btn-sm mr-1 mt-1 mb-1"
+                        onClick={() => this.loadPrevious(1)}
+                    >
+                        previous
+                    </button>
+                ) : (
+                    ""
+                )}
+                {posts.length ? (
+                    <button
+                        className="btn btn-raised btn-primary btn-sm mr-1 mt-1 mb-1"
+                        onClick={() => this.loadNext(1)}
+                    >
+                        next
+                    </button>
+                ) : (
+                    ""
                 )}
             </div>
         );
