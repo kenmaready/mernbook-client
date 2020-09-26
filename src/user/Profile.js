@@ -163,6 +163,27 @@ export class Profile extends Component {
                                             }
                                         ></FollowButon>
                                     )}
+                                    {isAuthenticated().user &&
+                                        isAuthenticated().user.role ===
+                                            "admin" && (
+                                            <div className="card mt-1 bg-light">
+                                                <div className="card-body">
+                                                    <h5 className="card-title">
+                                                        admin controls
+                                                    </h5>
+
+                                                    <Link
+                                                        className="btn btn-raised btn-success mr-1"
+                                                        to={`/user/edit/${user._id}`}
+                                                    >
+                                                        edit profile
+                                                    </Link>
+                                                    <DeleteUser
+                                                        userId={user._id}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
                                 </div>
                             </div>
                             <div className="container">

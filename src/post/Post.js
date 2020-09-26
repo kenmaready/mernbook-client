@@ -143,6 +143,28 @@ export class Post extends Component {
                                     />
                                 </>
                             )}
+                        {isAuthenticated().user &&
+                            post &&
+                            isAuthenticated().user.role === "admin" && (
+                                <div className="card mt-1 bg-light">
+                                    <div className="card-body">
+                                        <h5 className="card-title">
+                                            admin controls
+                                        </h5>
+
+                                        <Link
+                                            className="btn btn-raised btn-success mr-1"
+                                            to={`/posts/edit/${post._id}`}
+                                        >
+                                            edit post
+                                        </Link>
+                                        <DeletePost
+                                            postId={post._id}
+                                            ownerId={post.owner._id}
+                                        />
+                                    </div>
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>

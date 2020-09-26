@@ -14,6 +14,7 @@ import Post from "./post/Post";
 import EditPost from "./post/EditPost";
 import ForgotPassword from "./user/ForgotPassword";
 import ResetPassword from "./user/ResetPassword";
+import Admin from "./admin/Admin";
 
 function MainRouter() {
     return (
@@ -42,6 +43,7 @@ function MainRouter() {
                     path="/posts/edit/:postId"
                     component={EditPost}
                 />
+                <PrivateRoute exact path="/admin" component={Admin} />
                 <Route exact path="/reset" component={ForgotPassword} />
                 <Route exact path="/reset/:token" component={ResetPassword} />
             </Switch>

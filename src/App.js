@@ -4,6 +4,7 @@ import MainRouter from "./MainRouter";
 import "./css/style.css";
 
 function App() {
+    console.log("App() called...");
     return (
         <BrowserRouter>
             <MainRouter />

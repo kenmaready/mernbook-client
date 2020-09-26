@@ -93,6 +93,17 @@ const Menu = ({ history }) => (
                             {`My Profile`}
                         </Link>
                     </li>
+                    {isAuthenticated().user.role === "admin" && (
+                        <li>
+                            <Link
+                                className="nav-link"
+                                to={"/admin"}
+                                style={isActive(history, "/admin")}
+                            >
+                                admin
+                            </Link>
+                        </li>
+                    )}
                     <li className="nav-item">
                         <span
                             className="btn btn-primary nav-link"

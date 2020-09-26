@@ -9,6 +9,7 @@ export class DeleteUser extends Component {
         this.state = {
             show: false,
             redirectToHome: false,
+            redirectToAdmin: false,
         };
     }
 
@@ -21,6 +22,9 @@ export class DeleteUser extends Component {
                 if (response.error) {
                     console.log(response.error);
                 } else {
+                    if (isAuthenticated().user.role === "admin") {
+                        return this.setState({ redirectToAdmin: true });
+                    }
                     logout(() => true);
                     this.setState({ redirectToHome: true });
                 }
@@ -38,6 +42,10 @@ export class DeleteUser extends Component {
 
     render() {
         if (this.state.redirectToHome) {
+            return <Redirect to="/" />;
+        }
+
+        if (this.state.redirectToAdmin) {
             return <Redirect to="/" />;
         }
         return (

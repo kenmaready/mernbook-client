@@ -23,6 +23,7 @@ export class EditProfile extends Component {
             photo: null,
             fileSize: 0,
             error: "",
+            message: "",
             loading: false,
             redirectToLogin: false,
             redirectToProfile: false,
@@ -61,7 +62,7 @@ export class EditProfile extends Component {
     };
 
     handleChange = (e) => {
-        this.setState({ error: "" });
+        this.setState({ error: "", message: "" });
 
         let value, fileSize;
         if (e.target.name === "photo") {
@@ -91,14 +92,22 @@ export class EditProfile extends Component {
                 error: `Image file size is too large. Maximum image size is 100MB. Please select another image.`,
             });
         }
-        this.setState({ loading: true });
+        this.setState({ loading: true, message: "" });
 
         const token = isAuthenticated().token;
         updateProfile(this.userData, token)
             .then((response) => {
+                console.log("response:", response);
                 if (response.error) {
+                    console.log("response:", response);
                     this.setState({ error: response.error, loading: false });
                 } else {
+                    if (isAuthenticated().user.role === "admin") {
+                        return this.setState({
+                            message: "profile successfully updated by admin",
+                            loading: false,
+                        });
+                    }
                     authenticate({ ...response.data, token }, () => {
                         this.setState({ redirectToProfile: true, error: "" });
                     });
@@ -184,6 +193,7 @@ export class EditProfile extends Component {
             about,
             password,
             error,
+            message,
             loading,
             redirectToLogin,
             redirectToProfile,
@@ -207,6 +217,13 @@ export class EditProfile extends Component {
                         style={{ display: error ? "" : "none" }}
                     >
                         {error}
+                    </div>
+                    <div
+                        className="alert alert-primary fade show text-muted"
+                        role="alert"
+                        style={{ display: message ? "" : "none" }}
+                    >
+                        {message}
                     </div>
                     <div>
                         <RotateLoader
